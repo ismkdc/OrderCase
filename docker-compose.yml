@@ -1,0 +1,25 @@
+version: '3.9'
+services:
+    standing-order-api:
+        build:
+            dockerfile: dockerfile
+        restart: always
+        depends_on:
+            - rabbitmq
+        environment:
+            ASPNETCORE_ENVIRONMENT: Prod
+        networks:
+            - dev
+        ports: 
+            - 127.0.0.1:8080:80
+    rabbitmq:
+        image: rabbitmq:3-management-alpine
+        restart: always
+        networks:
+            - dev
+        ports: 
+            - 127.0.0.1:5672:5672
+            - 127.0.0.1:15672:15672
+
+networks:
+    dev:
